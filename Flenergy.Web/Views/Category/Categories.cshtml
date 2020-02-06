@@ -1,0 +1,638 @@
+﻿@model Flenergy.Data.Models.BillingCategory
+@{
+    ViewBag.Title = "Estate | AVS";
+    var rowIndex = 1;
+}
+
+
+<div class="row">
+ 
+
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Actions</h5>
+                <div class="pull-right">
+                    <div class="btn-group">
+
+                        <a data-toggle="modal" class="btn btn-xs btn-white active" href="#modal-form">Add Category</a>
+
+
+
+                        <div id="modal-form" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Create a Category</h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data" asp-action="Create">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Category name..." id="name" class="form-control" asp-for="BillingCategoryName" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Amount</span> <input type="number" step="0.01" min="0" placeholder="Amount per kw... eg 24.87" id="Amount" asp-for="BillingAmount" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Estate</span> <select class="form-control select2-search__field" asp-for="EstateId" asp-items="@ViewBag.Estates" required>
+                                                            <option selected value="">Please Select Estate</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon"></span> <input type="submit" value="SaveChanges" class="form-control btn  btn-primary" required /></div>
+
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p>Create Billing Category  <span id="categoryIdd" class="text-primary"></span></p>
+                                                    <p class="text-center">
+                                                        <a href="#"><i class="fa fa-sign-in big-icon"></i></a>
+                                                    </p>
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div id="myModal" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Edit a Category</h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data" asp-action="EditCategory"method="post">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Category name..." id="Editname" class="form-control" asp-for="BillingCategoryName" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Amount</span> <input type="number" step="0.01" min="0" placeholder="Amount per kw... eg 24.87" id="EditAmount" asp-for="BillingAmount" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Estate</span> <select class="form-control select2-search__field" asp-for="EstateId" asp-items="@ViewBag.Estates" id="EditEstateSelect" required>
+                                                            <option selected id="init">Please Select Estate</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon"></span> <input type="submit" value="SaveChanges" class="form-control btn  btn-primary" required /></div>
+                                                    <input type="hidden" asp-for="BillingCategoryId" />
+                                                    <input type="hidden" asp-for="EstateId" id="EstateId" />
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p>Edit Billing Category  <span id="categoryIdd" class="text-primary"></span></p>
+                                                    <p class="text-center">
+                                                        <a href="#"><i class="fa fa-sign-in big-icon"></i></a>
+                                                    </p>
+                                                </div>
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="categoryModal" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Set Billin For <span id="categoryId" class="text-primary"></span></h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Category name..." id="categoryName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Amount</span> <input type="number" step="0.01" min="0" placeholder="Amount per kw... eg 24.87" id="categoryAmount" class="form-control" required /></div>
+
+                                                    <div class="input-group m-b"><span class="input-group-addon"></span> <input type="submit" value="SaveChanges" class="form-control btn  btn-primary" id="categorySubmit" required /></div>
+                                                    <input type="hidden" id="EstateIdforCategory" class="form-control" required />
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p>create Billing Category for <span id="categoryIdd" class="text-primary"></span></p>
+                                                    <p class="text-center">
+                                                        <a href="#"><i class="fa fa-sign-in big-icon"></i></a>
+                                                    </p>
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row" id="hide">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>AVS Categories</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Estate</th>
+
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in ViewBag.Categories)
+                            {
+
+                                <tr class="gradeX">
+                                    <td>
+                                        @(rowIndex++)
+                                    </td>
+                                    <td>@category.BillingCategoryName</td>
+                                    <td>
+                                        @category.BillingAmount
+                                    </td>
+                                    <td>
+                                        @category.Estate.EstateName
+                                    </td>
+
+                                    <td class="center">
+                                        <form asp-action="DeleteCategory" asp-controller="Category" asp-route-id="@category.BillingCategoryId" method="post">
+                                            <a onclick="editProduct(@category.BillingCategoryId)" title="Edit"><i onclick="editProduct(@category.BillingCategoryId)" class="fa fa-pencil"></i></a>
+                                            <button type="submit" onclick="return confirm('are you sure you want to delete the category : @category.BillingCategoryName')" title="delete"><i class="fa fa-trash-o"></i></button>
+                                            <a onclick="billinCategory(@category.BillingCategoryId)" title="Create Billing Category For this Estate"><i onclick="billinCategory(@category.BillingCategoryId)" class="fa fa-btc"></i></a>
+                                        </form>
+                                    </td>
+
+                                    @*<td class="center" title="Delete"><a onclick="deleteProduct(@estate.EstateId)"><i onclick="editProduct(@estate.EstateId)" class="fa fa-trash-o"></i></a></td>*@
+                                </tr>
+                            }
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>SN</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+
+    <script>
+        function edKeyPress() {
+        $('#chckEmail').hide();
+        var edValue = document.getElementById("email");
+        var url = '@Url.Content("~/")' + "Estate/ExistingEmail";
+        var ddlsource = edValue;
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var isExistEmail = data;
+                if (isExistEmail === true) {
+                    Email.checkValidity() == false;
+                    $('#chckEmail').show();
+                     var lblValue = document.getElementById("chckEmail");
+    chckEmail.innerText = "Email Exists"
+                }
+                else {
+                    Email.checkValidity() == true;
+                    $('#chckEmail').hide();
+                }
+            });
+
+    }
+
+        function edValueKeyPress() {
+          $('#chckNumber').hide();
+        var edValue = document.getElementById("number");
+        var url = '@Url.Content("~/")' + "Estate/ExistingNumber";
+        var ddlsource = edValue;
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var isExistNumber = data;
+                if (isExistNumber === true) {
+                    Email.checkValidity() == false;
+                    $('#chckNumber').show();
+                     var lblValue = document.getElementById("chckNumber");
+    chckEmail.innerText = "Phone Number Exists"
+                }
+                else {
+                    Email.checkValidity() == true;
+                   $('#chckNumber').hide();
+                }
+            });
+
+    }
+
+    </script>
+
+    <script>
+
+
+        $('#EditfileUpload').click(function (e) {
+            const isValidEmail = Email.checkValidity();
+            const isValidPhone = PhoneNo.checkValidity();
+
+            if ($('#Name').val() === "" || $('#Address').val() === "" || $('#PhoneNo').val() === "" || $('#LogoUrl').val() === "" || $('#Email').val() === "" || !isValidEmail || !isValidPhone) {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('please check for adjustments', 'Form is not valid');
+
+                }, 1300);
+                return false;
+            }
+            if (!isValidEmail) {
+
+            }
+            else {
+                EditEstate();
+            }
+
+        });
+
+        function EditEstate() {
+            var Estate = new Object();
+            Estate.EstateId = $('#EstateId').val();
+            Estate.EstateName = $('#Name').val();
+            Estate.Address = $('#Address').val();
+            Estate.LogoUrl = $('#LogoUrl').val();
+            Estate.Email = $('#PhoneNo').val();
+
+
+            $.ajax({
+                url: "/Estate/EditEstate",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(Estate),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+
+
+                    setTimeout(function () {
+                        toastr.options = {
+                            closeButton: true,
+                            progressBar: true,
+                            showMethod: 'slideDown',
+                            timeOut: 10000
+                        };
+                        toastr.success('congratulation', 'Updated successfully');
+
+                    }, 1300);
+                    alert("Estate was updated successfully...");
+                    window.location.href = "/Estate/Estate"
+                    //$.ajax({
+                    //    url: "/Estate/Estate",
+                    //    type: "GET",
+                    //    dataType: "json",
+                    //    async: true,
+                    //    contentType: "application/json; charset =utf-8",
+                    //});
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+    </script>
+    <script>
+
+
+        $('#categorySubmit').click(function (e) {
+
+
+            if ($('#categoryName').val() === "" || $('#categoryAmount').val() === "") {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('Form should not be empty', 'Form is not valid');
+
+                }, 1300);
+                return false;
+            }
+
+            else {
+                CreateEstateCategory();
+            }
+
+        });
+
+        function CreateEstateCategory() {
+            var BillingCategory = new Object();
+            BillingCategory.EstateId = $('#EstateIdforCategory').val();
+            BillingCategory.BillingCategoryName = $('#categoryName').val();
+            BillingCategory.BillingAmount = $('#categoryAmount').val();
+
+
+
+            $.ajax({
+                url: "/Estate/CreateBillingCategory",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(BillingCategory),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+
+
+                    //setTimeout(function () {
+                    //    toastr.options = {
+                    //        closeButton: true,
+                    //        progressBar: true,
+                    //        showMethod: 'slideDown',
+                    //        timeOut: 10000
+                    //    };
+                    //    toastr.success('congratulation', 'data was successfully');
+
+                    //}, 1300);
+                    alert("Category was added successfully...");
+                    window.location.href = "/Estate/Estate"
+                    //$.ajax({
+                    //    url: "/Estate/Estate",
+                    //    type: "GET",
+                    //    dataType: "json",
+                    //    async: true,
+                    //    contentType: "application/json; charset =utf-8",
+                    //});
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+    </script>
+
+
+
+    <script>
+
+        function editProduct(id) {
+            $('#myModal').modal({ show: false })
+              var url = '@Url.Content("~/")' + "Category/GetEstates";
+            //Window.location.href = "/Estate/EditEstate/" + id
+            $.ajax({
+                url: '/Category/EditCategory/' + id, // The method name + paramater
+                success: function (data) {
+
+                    document.getElementById("Editname").value = data.billingCategoryName;
+                    document.getElementById("EditAmount").value = data.billingAmount;
+                    document.getElementById("EstateId").value = data.estateId;
+
+                      var ddlsource = "#EstateId";
+                    $.getJSON(url,{ Id: $(ddlsource).val() }, function (desc) {
+                        var items = "";
+
+                        $.each(desc, function (i, row) {
+                            items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                        });
+                        $('#EditEstateSelect').html(items);
+                    });
+
+
+                    $('#myModal').modal('show');
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+        function billinCategory(id) {
+            $('#categoryModal').modal({ show: false })
+            //Window.location.href = "/Estate/EditEstate/" + id
+            $.ajax({
+                url: '/Estate/EstateBillingCategory/' + id, // The method name + paramater
+                success: function (data) {
+                    document.getElementById("EstateIdforCategory").value = data.estateId;
+                    document.getElementById("categoryId").innerText = data.estateName;
+                    document.getElementById("categoryIdd").innerText = data.estateName;
+                    document.getElementById("categoryName").value = ""
+                    document.getElementById("categoryAmount").value = ""
+                    categoryId.innerText = data.estateName;
+                    categoryIdd.innerText = data.estateName;
+
+
+                    $('#categoryModal').modal('show');
+                }
+            });
+        }
+    </script>
+    <script>
+
+
+        $('#fileUpload').click(function (e) {
+            const isValidEmail = email.checkValidity();
+            const isValidPhone = number.checkValidity();
+
+            if ($('#name').val() === "" || $('#address').val() === "" || $('#number').val() === "" || $('#upload').val() === "" || $('#email').val() === "" || !isValidEmail || !isValidPhone) {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('please check for adjustments', 'Form is not valid');
+
+                }, 1300);
+                return false;
+            }
+            if (!isValidEmail) {
+
+            }
+            else {
+                AddEstate();
+            }
+
+        });
+
+        function AddEstate() {
+            var Estate = new Object();
+            Estate.EstateName = $('#name').val();
+            Estate.Address = $('#address').val();
+            Estate.LogoUrl = $('#upload').val();
+            Estate.Email = $('#email').val();
+            Estate.PhoneNo = $('#number').val();
+
+
+            $.ajax({
+                url: "/Estate/Create",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(Estate),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+
+
+                    setTimeout(function () {
+                        toastr.options = {
+                            closeButton: true,
+                            progressBar: true,
+                            showMethod: 'slideDown',
+                            timeOut: 10000
+                        };
+                        toastr.success('congratulation', 'Saved successfully');
+
+                    }, 1300);
+                    alert("Estate was added successfully...");
+                    window.location.href = "/Estate/Estate"
+                    //$.ajax({
+                    //    url: "/Estate/Estate",
+                    //    type: "GET",
+                    //    dataType: "json",
+                    //    async: true,
+                    //    contentType: "application/json; charset =utf-8",
+                    //});
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+    </script>
+
+
+    <script>
+
+        function deleteProduct(id) {
+            $.ajax({
+                url: '/Estate/Delete/' + id, // The method name + paramater
+                success: function (data) {
+                    document.getElementById("edit").click();
+                }
+            });
+        }
+    </script>
+
+
+
+
+
+}
+@if (ViewBag.Deleted == "Yes")
+{
+    <script>
+        setTimeout(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 10000
+            };
+            toastr.success('Success', 'category has been deleted ');
+
+        }, 1300);
+    </script>
+}
+
+

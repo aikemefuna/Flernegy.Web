@@ -1,0 +1,821 @@
+﻿@model Flenergy.Data.Models.Customer
+@{
+    ViewBag.Title = "Meter | AVS";
+    var rowIndex = 1;
+}
+
+
+<div class="row">
+
+
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Actions</h5>
+                <div class="pull-right">
+                    <div class="btn-group">
+
+                        <a data-toggle="modal" class="btn btn-xs btn-primary" href="#modal-form">Add Customer</a>
+
+
+
+                        <div id="modal-form" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Create Customer</h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data" asp-action="Create" asp-controller="Customer" method="post">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." asp-for="FirstName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." asp-for="MiddleName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" asp-for="Address" class="form-control" required /></div>
+
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">State</span> <select asp-for="State" id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                            <option selected value="">Please Select</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Estate</span> <select asp-for="EstateId" id="estId" class="form-control select2-search__field" asp-items="@ViewBag.Estates" required>
+                                                            <option selected value="">Please Select</option>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" asp-for="Email" class="form-control" required /></div>
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." asp-for="LastName" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Gender</span><select class="form-control" asp-for="Gender" required>
+                                                            <option selected value="">Please Select</option>
+                                                            <option value="Male" name="Male">Male</option>
+                                                            <option value="Female" name="Male">Female</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="tel" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" asp-for="PhoneNo" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' asp-for="LGA" id="LocalGovernmentId" class="form-control select2-search__field" required></select>
+                                                    </div>
+                                                
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Billing Cat</span>  <select asp-items='@(new SelectList(string.Empty, "BillingCategoryId", "BillingCategoryName"))' asp-for="BillingCategoryId" id="catId" class="form-control select2-search__field" required></select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" asp-for="Password" class="form-control" required /></div>
+                                                </div>
+
+                                                <div class="text-center">
+
+
+                                                    <input type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div id="myModal" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Edit Customer</h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="Fi" asp-for="FirstName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="Mi" asp-for="MiddleName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Ad" asp-for="Address" class="form-control" required /></div>
+
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">State</span> <select id="state" asp-for="State" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                            <option selected value="">Please Select</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Estate</span> <select class="form-control select2-search__field" asp-for="EstateId" asp-items="@ViewBag.Estates" id="EditEstateSelect" disabled required>
+                                                            <option selected id="init">Please Select Estate</option>
+                                                        </select>
+                                                    </div>
+                                                    <input type="hidden" id="adId" asp-for="CustomerId" class="form-control" required />
+                                                    <input type="hidden" id="EstateId" asp-for="EstateId" class="form-control" required />
+                                                    <input type="hidden" id="stateID" asp-for="State" class="form-control" required />
+                                                    <input type="hidden" id="lgaID" asp-for="LGA" class="form-control" required />
+
+                                                    
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input id="La" type="text" placeholder="last name..." asp-for="LastName" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Gender</span><select id="Ge" class="form-control" asp-for="Gender" required>
+                                                            <option selected value="">Please Select</option>
+                                                            <option value="Male" name="Male">Male</option>
+                                                            <option value="Female" name="Male">Female</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Ph" asp-for="PhoneNo" disabled class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="Lga" asp-for="LGA" class="form-control select2-search__field" required></select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Email</span> <input id="Em" type="email" placeholder="Email" asp-for="Email" class="form-control" required disabled /></div>
+                                                </div>
+
+                                                <div class="text-center">
+
+
+                                                    <input type="submit" value="Create" id="EditAdminBtn" class="form-control btn  btn-primary" />
+                                                </div>
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<div id="categoryModal" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="text-center">
+                                            <h3 class="m-t-none m-b">Set Billin For <span id="categoryId" class="text-primary"></span></h3>
+
+                                            <p>Fill all forms correctly.</p>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <form role="form" enctype="multipart/form-data">
+                                                    <div class="col-sm-6 b-r">
+
+                                                        <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Category name..." id="categoryName" class="form-control" required /></div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Amount</span> <input type="number" step="0.01" min="0" placeholder="eg 24.87" id="categoryAmount" class="form-control" required /></div>
+
+                                                        <div class="input-group m-b"><span class="input-group-addon"></span> <input type="submit" value="SaveChanges" class="form-control btn  btn-primary" id="categorySubmit" required /></div>
+                                                        <input type="hidden" id="EstateIdforCategory" class="form-control" required />
+
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p>create Billing Category for <span id="categoryIdd" class="text-primary"></span></p>
+                                                        <p class="text-center">
+                                                            <a href="#"><i class="fa fa-sign-in big-icon"></i></a>
+                                                        </p>
+                                                    </div>
+
+
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+                        @*<div id="estateModal" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="text-center">
+                                            <h3 class="m-t-none m-b">Create Estate Admin For <span id="estateId" class="text-primary"></span></h3>
+
+                                            <p>Fill all forms correctly.</p>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <form role="form" enctype="multipart/form-data">
+                                                    <div class="col-sm-6 b-r">
+
+                                                        <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="FirstName" class="form-control" required /></div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="MiddleName" class="form-control" required /></div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Add" class="form-control" required /></div>
+
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon">State</span> <select id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                                <option selected value="">Please Select</option>
+                                                            </select>
+                                                        </div>
+                                                        <input type="hidden" id="EstateIdforAdmin" class="form-control" required />
+
+                                                        <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" id="EmailId" class="form-control" required /></div>
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." id="LastName" class="form-control" required /></div>
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon">Gender</span><select class="form-control" id="Gender" required>
+                                                                <option selected value="">Please Select</option>
+                                                                <option value="Male" name="Male">Male</option>
+                                                                <option value="Female" name="Male">Female</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Phone" class="form-control" required /></div>
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="lgaId" class="form-control select2-search__field" required></select>
+                                                        </div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" id="Password" class="form-control" required /></div>
+                                                    </div>
+
+                                                    <div class="text-center">
+
+
+                                                        <input id="estateAdminSubmit" type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                    </div>
+
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@@*<div id="estateModal" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="text-center">
+                                            <h3 class="m-t-none m-b">Create Estate Admin For <span id="estateId" class="text-primary"></span></h3>
+
+                                            <p>Fill all forms correctly.</p>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <form role="form" enctype="multipart/form-data">
+                                                    <div class="col-sm-6 b-r">
+
+                                                        <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="FirstName" class="form-control" required /></div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="MiddleName" class="form-control" required /></div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Add" class="form-control" required /></div>
+
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon">State</span> <select id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                                <option selected value="">Please Select</option>
+                                                            </select>
+                                                        </div>
+                                                        <input type="hidden" id="EstateIdforAdmin" class="form-control" required />
+
+                                                        <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" id="EmailId" class="form-control" required /></div>
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." id="LastName" class="form-control" required /></div>
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon">Gender</span><select class="form-control" id="Gender" required>
+                                                                <option selected value="">Please Select</option>
+                                                                <option value="Male" name="Male">Male</option>
+                                                                <option value="Female" name="Male">Female</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Phone" class="form-control" required /></div>
+                                                        <div class="input-group m-b">
+                                                            <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="lgaId" class="form-control select2-search__field" required></select>
+                                                        </div>
+                                                        <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" id="Password" class="form-control" required /></div>
+                                                    </div>
+
+                                                    <div class="text-center">
+
+
+                                                        <input id="estateAdminSubmit" type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                    </div>
+
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@@*<div id="estateModal" class="modal fade" aria-hidden="true">
+                                    <div class="modal-dialog">
+
+                                        <div class="modal-content">
+                                            <div class="text-center">
+                                                <h3 class="m-t-none m-b">Create Estate Admin For <span id="estateId" class="text-primary"></span></h3>
+
+                                                <p>Fill all forms correctly.</p>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <form role="form" enctype="multipart/form-data">
+                                                        <div class="col-sm-6 b-r">
+
+                                                            <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="FirstName" class="form-control" required /></div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="MiddleName" class="form-control" required /></div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Add" class="form-control" required /></div>
+
+                                                            <div class="input-group m-b">
+                                                                <span class="input-group-addon">State</span> <select id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                                    <option selected value="">Please Select</option>
+                                                                </select>
+                                                            </div>
+                                                            <input type="hidden" id="EstateIdforAdmin" class="form-control" required />
+
+                                                            <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" id="EmailId" class="form-control" required /></div>
+
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." id="LastName" class="form-control" required /></div>
+                                                            <div class="input-group m-b">
+                                                                <span class="input-group-addon">Gender</span><select class="form-control" id="Gender" required>
+                                                                    <option selected value="">Please Select</option>
+                                                                    <option value="Male" name="Male">Male</option>
+                                                                    <option value="Female" name="Male">Female</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Phone" class="form-control" required /></div>
+                                                            <div class="input-group m-b">
+                                                                <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="lgaId" class="form-control select2-search__field" required></select>
+                                                            </div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" id="Password" class="form-control" required /></div>
+                                                        </div>
+
+                                                        <div class="text-center">
+
+
+                                                            <input id="estateAdminSubmit" type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                        </div>
+
+
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@@*<div id="estateModal" class="modal fade" aria-hidden="true">
+                                    <div class="modal-dialog">
+
+                                        <div class="modal-content">
+                                            <div class="text-center">
+                                                <h3 class="m-t-none m-b">Create Estate Admin For <span id="estateId" class="text-primary"></span></h3>
+
+                                                <p>Fill all forms correctly.</p>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <form role="form" enctype="multipart/form-data">
+                                                        <div class="col-sm-6 b-r">
+
+                                                            <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="FirstName" class="form-control" required /></div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="MiddleName" class="form-control" required /></div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Add" class="form-control" required /></div>
+
+                                                            <div class="input-group m-b">
+                                                                <span class="input-group-addon">State</span> <select id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                                    <option selected value="">Please Select</option>
+                                                                </select>
+                                                            </div>
+                                                            <input type="hidden" id="EstateIdforAdmin" class="form-control" required />
+
+                                                            <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" id="EmailId" class="form-control" required /></div>
+
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." id="LastName" class="form-control" required /></div>
+                                                            <div class="input-group m-b">
+                                                                <span class="input-group-addon">Gender</span><select class="form-control" id="Gender" required>
+                                                                    <option selected value="">Please Select</option>
+                                                                    <option value="Male" name="Male">Male</option>
+                                                                    <option value="Female" name="Male">Female</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Phone" class="form-control" required /></div>
+                                                            <div class="input-group m-b">
+                                                                <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="lgaId" class="form-control select2-search__field" required></select>
+                                                            </div>
+                                                            <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" id="Password" class="form-control" required /></div>
+                                                        </div>
+
+                                                        <div class="text-center">
+
+
+                                                            <input id="estateAdminSubmit" type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                        </div>
+
+
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@@*<div id="estateModal" class="modal fade" aria-hidden="true">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+                                                <div class="text-center">
+                                                    <h3 class="m-t-none m-b">Create Estate Admin For <span id="estateId" class="text-primary"></span></h3>
+
+                                                    <p>Fill all forms correctly.</p>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <form role="form" enctype="multipart/form-data">
+                                                            <div class="col-sm-6 b-r">
+
+                                                                <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="FirstName" class="form-control" required /></div>
+                                                                <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="MiddleName" class="form-control" required /></div>
+                                                                <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Add" class="form-control" required /></div>
+
+                                                                <div class="input-group m-b">
+                                                                    <span class="input-group-addon">State</span> <select id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                                        <option selected value="">Please Select</option>
+                                                                    </select>
+                                                                </div>
+                                                                <input type="hidden" id="EstateIdforAdmin" class="form-control" required />
+
+                                                                <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" id="EmailId" class="form-control" required /></div>
+
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." id="LastName" class="form-control" required /></div>
+                                                                <div class="input-group m-b">
+                                                                    <span class="input-group-addon">Gender</span><select class="form-control" id="Gender" required>
+                                                                        <option selected value="">Please Select</option>
+                                                                        <option value="Male" name="Male">Male</option>
+                                                                        <option value="Female" name="Male">Female</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Phone" class="form-control" required /></div>
+                                                                <div class="input-group m-b">
+                                                                    <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="lgaId" class="form-control select2-search__field" required></select>
+                                                                </div>
+                                                                <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" id="Password" class="form-control" required /></div>
+                                                            </div>
+
+                                                            <div class="text-center">
+
+
+                                                                <input id="estateAdminSubmit" type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                            </div>
+
+
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" id="hide">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>AVS Meter</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a href="#">Config option 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Full Name</th>
+                                        <th>Total meters</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Account No</th>
+                                        <th>Category</th>
+                                        <th>Estate</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var customer in ViewBag.customers)
+                                    {
+
+                                        <tr class="gradeX">
+                                            <td>
+                                                @(rowIndex++)
+                                            </td>
+                                            <td>@customer.FullName</td>
+                                            <td>
+                                                @customer.NoOfMeter
+                                            </td>
+                                            <td>
+                                                @customer.Email
+                                            </td>
+                                            <td>
+                                                @customer.PhoneNo
+                                            </td>
+                                            <td>
+                                                @customer.AccountNo
+                                            </td>
+                                            <td>@customer.BillingCategory.BillingCategoryName</td>
+                                            <td>@customer.Estate.EstateName</td>
+
+                                            <td class="center">
+                                                <form asp-action="DeleteCustomer" asp-controller="Customer" asp-route-id="@customer.CustomerId" method="post">
+                                                    <a onclick="editCustomer(@customer.CustomerId)" title="Edit"><i onclick="editProduct(@customer.CustomerId)" class="fa fa-pencil"></i></a> |
+                                                    <button type="submit" onclick="return confirm('are you sure you want to delete the estate : @customer.FullName')" title="delete"><i class="fa fa-trash-o"></i></button> |
+
+                                                </form>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Full Name</th>
+                                        <th>Meter No</th>
+                                        <th>Email</th>
+                                        <th>Estate</th>
+                                        <th>Category</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @section Scripts{
+
+
+            <script>
+                $(document).ready(function () {
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                });
+            </script>
+
+
+
+
+
+            <script>
+
+                function editCustomer(id) {
+                    $('#myModal').modal({ show: false })
+                      var url = '@Url.Content("~/")' + "Admin/GetEstates";
+                      var url1 = '@Url.Content("~/")' + "Admin/GetStates";
+                      var url2 = '@Url.Content("~/")' + "Admin/GetLga";
+                    //Window.location.href = "/Estate/EditEstate/" + id
+                    $.ajax({
+                        url: '/Admin/EditAdmin/' + id, // The method name + paramater
+                        success: function (data) {
+
+                            document.getElementById("Fi").value = data.firstName;
+                            document.getElementById("La").value = data.lastName;
+                            document.getElementById("Mi").value = data.middleName;
+                            document.getElementById("Ph").value = data.phoneNo;
+                            document.getElementById("Em").value = data.email;
+                            document.getElementById("Ad").value = data.address;
+                            document.getElementById("Ge").value = data.Gender;
+
+                            document.getElementById("EstateId").value = data.estateId;
+                            document.getElementById("adId").value = data.estateAdminId;
+                            document.getElementById("stateID").value = data.state;
+                            document.getElementById("lgaID").value = data.lga;
+
+                              var ddlsource = "#EstateId";
+                              var ddlsource1 = "#stateID";
+                              var ddlsource2 = "#lgaID";
+                            $.getJSON(url,{ Id: $(ddlsource).val() }, function (desc) {
+                                var items = "";
+
+                                $.each(desc, function (i, row) {
+                                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                                });
+                                $('#EditEstateSelect').html(items);
+                            });
+                            $.getJSON(url1, { Id: $(ddlsource1).val() }, function (desc) {
+                                var items = "";
+
+                                $.each(desc, function (i, row) {
+                                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                                });
+                                $('#state').html(items);
+                            });
+                            $.getJSON(url2, { Id: $(ddlsource2).val() }, function (desc) {
+                                var items = "";
+
+                                $.each(desc, function (i, row) {
+                                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                                });
+                                $('#Lga').html(items);
+                            });
+
+
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            </script>
+
+
+
+
+
+
+            <script>
+
+
+                $('#EditfileUpload').click(function (e) {
+
+
+                    if ($('#mNo').val() === "" || $('#mTy').val() === "") {
+                        setTimeout(function () {
+                            toastr.options = {
+                                closeButton: true,
+                                progressBar: true,
+                                showMethod: 'slideDown',
+                                timeOut: 10000
+                            };
+                            toastr.warning('Form cannot be empty', 'Form is not valid');
+
+                        }, 1300);
+                        return false;
+                    }
+
+                    else {
+                        EditMeter();
+                    }
+
+                });
+
+                function EditMeter() {
+                    var Adm_Meter = new Object();
+                    Adm_Meter.EstateId = $('#estateId').val();
+                    Adm_Meter.Meterno = $('#mNo').val();
+                    Adm_Meter.MeterType = $('#mTy').val();
+                    Adm_Meter.Adm_MeterId = $('#mId').val();
+
+
+                    $.ajax({
+                        url: "/Meter/EditMeter",
+                        type: "POST",
+                        dataType: "json",
+                        data: JSON.stringify(Adm_Meter),
+                        async: false,
+                        contentType: "application/json; charset =utf-8",
+
+                        success: function (response) {
+                            if (response === true) {
+                                SuccessAlert();
+                                alert("Updated Successfully");
+                                window.location.href = "/Meter/GetMeters"
+                            }
+
+
+                            //$.ajax({
+                            //    url: "/Estate/Estate",
+                            //    type: "GET",
+                            //    dataType: "json",
+                            //    async: true,
+                            //    contentType: "application/json; charset =utf-8",
+                            //});
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+
+                }
+
+                function SuccessAlert() {
+                    setTimeout(function () {
+                        toastr.options = {
+                            closeButton: true,
+                            progressBar: true,
+                            showMethod: 'slideDown',
+                            timeOut: 10000
+                        };
+                        toastr.success('congratulation', 'Updated successfully');
+
+                    }, 1300);
+                }
+            </script>
+
+         
+            <script>
+                $(function () {
+                    $('#StateId').change(function () {
+                        var url = '@Url.Content("~/")' + "Customer/GetLgaByState";
+                        var ddlsource = "#StateId";
+                        $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                            var items = "";
+                            $('#LocalGovernmentId').empty();
+                            $.each(data, function (i, row) {
+                                items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                            });
+                            $('#LocalGovernmentId').html(items);
+                        });
+                    });
+                });
+
+
+            </script>
+            <script>
+                $(function () {
+                    $('#estId').change(function () {
+                        var url = '@Url.Content("~/")' + "Customer/getCategoriesForAnEstate";
+                        var ddlsource = "#estId";
+                        $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                            var items = "";
+                            $('#catId').empty();
+                            $.each(data, function (i, row) {
+                                items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                            });
+                            $('#catId').html(items);
+                        });
+                    });
+                });
+
+
+            </script>
+
+          
+
+       
+
+        }
+
+

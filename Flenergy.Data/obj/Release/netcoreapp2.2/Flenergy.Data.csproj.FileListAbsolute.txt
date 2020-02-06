@@ -1,0 +1,16 @@
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Flenergy.Data.deps.json
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Flenergy.Data.runtimeconfig.json
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Flenergy.Data.runtimeconfig.dev.json
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Flenergy.Data.dll
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Flenergy.Data.pdb
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\bin\Release\netcoreapp2.2\Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.csprojAssemblyReference.cache
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.csproj.CoreCompileInputs.cache
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.AssemblyInfoInputs.cache
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.AssemblyInfo.cs
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.csproj.CopyComplete
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.dll
+C:\VendingSystem\Flenergy.Web\Flenergy.Data\obj\Release\netcoreapp2.2\Flenergy.Data.pdb

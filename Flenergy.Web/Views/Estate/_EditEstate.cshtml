@@ -1,0 +1,39 @@
+﻿@model  Flenergy.Data.Models.Estate
+<div id="myModal" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="text-center">
+                <h3 class="m-t-none m-b">Edit an Estate</h3>
+
+                <p>Fill all forms correctly.</p>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <form role="form" enctype="multipart/form-data">
+                        <div class="col-sm-6 b-r">
+
+                            <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Estate name..." id="EstateName" name="EstateName" asp-for="EstateName" class="form-control" required /></div>
+                            <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address..." id="Address" name="Address" class="form-control" required asp-for="Address" /></div>
+                            <div class="input-group m-b"><span class="input-group-addon">Upload</span> <input type="file" placeholder="Upload File..." id="LogoUrl" name="LogoUrl" class="form-control" required asp-for="LogoUrl" /></div>
+
+                            <input type="hidden" asp-for="EstateId" placeholder="Upload File..." id="EstateId" name="EstateId" class="form-control" required />
+
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group m-b"><span class="input-group-addon">@@</span> <input type="email" placeholder="Email..." id="Email" name="Email" class="form-control" required asp-for="Email" /></div>
+                            <div class="input-group m-b"><span class="input-group-addon">Tel</span> <input type="tel" pattern="^\d{4}\d{3}\d{4}$" id="PhoneNo" name="PhoneNo" required placeholder="Phone no..." asp-for="PhoneNo" class="form-control" /></div>
+                            <div class="input-group m-b"><span class="input-group-addon">@@</span> <input type="submit" class="form-control btn  btn-primary" id="EditfileUpload" required /></div>
+                        </div>
+
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model  Flenergy.Web.ViewModels.SigninViewModel
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.7.1/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Sep 2017 07:37:30 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AVS | Login</title>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="~/css/animate.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">AVS</h1>
+
+            </div>
+            <h3>Welcome to Flenergy</h3>
+            <p>
+                Perfectly designed Energy vending system. A one stop shop for estate energy vending. 
+                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+            </p>
+            <p>Login in. To see it in action.</p>
+            <form class="m-t" role="form" asp-action="Signin" asp-controller="Auth">
+                <div class="form-group">
+                    <input type="email" asp-for="Email" class="form-control" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" asp-for="Password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                <a href="#"><small>Forgot password?</small></a>
+              
+            </form>
+           <p class="m-t"> <small>Flex Systems Limited &copy; 2020</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="~/js/jquery-3.1.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+</body>
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.7.1/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Sep 2017 07:37:30 GMT -->
+</html>

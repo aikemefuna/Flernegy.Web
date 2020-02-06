@@ -1,0 +1,893 @@
+﻿
+@{
+    ViewBag.Title = "Estate | AVS";
+    var rowIndex = 1;
+}
+
+
+<div class="row">
+
+
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Actions</h5>
+                <div class="pull-right">
+                    <div class="btn-group">
+
+                        <a data-toggle="modal" class="btn btn-xs btn-primary" href="#modal-form">Add Estate</a>
+                        <a class="btn btn-xs btn-primary" asp-action="Categories" asp-controller="Category">View Categories</a>
+                        <a class="btn btn-xs btn-primary" asp-action="EstateAdmin" asp-controller="Admin">View Estate Admin</a>
+
+
+                        <div id="modal-form" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Create an Estate</h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Estate name..." id="name" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address..." id="address" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">State</span> <select id="StatesId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                            <option selected value="">Please Select</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Upload</span> <input type="file" placeholder="Upload File..." id="upload" class="form-control" required /></div>
+
+
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">@@</span> <input type="email" onkeyup="edKeyPress()" placeholder="Email..." id="email" class="form-control" required />
+                                                    </div>
+                                                    <span id="chckEmail" class="text-danger"></span>
+                                                    <span id="chckNumber" class="text-danger"></span>
+
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Tel</span> <input type="tel" onkeyup="edValueKeyPress()" pattern="^\d{4}\d{3}\d{4}$" id="number" required placeholder="Phone no..." class="form-control" />
+                                                    </div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="LocalGovernmentId" class="form-control select2-search__field"></select>
+                                                    </div>
+                                                    <div class="input-group m-b" id="file"><span class="input-group-addon">@@</span> <input type="submit" value="submit" class="form-control btn  btn-primary" id="fileUpload" required /></div>
+                                                </div>
+
+
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div id="myModal" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Edit an Estate</h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Estate name..." id="Name" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address..." id="Address" class="form-control" required /></div>
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Upload</span> <input type="file" placeholder="Upload File..." id="LogoUrl" class="form-control" required /></div>
+
+                                                    <input type="hidden" id="EstateId" class="form-control" required />
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group m-b"><span class="input-group-addon">@@</span> <input type="email" placeholder="Email..." id="Email" class="form-control" required disabled /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Tel</span> <input type="tel" pattern="^\d{4}\d{3}\d{4}$" id="PhoneNo" required placeholder="Phone no..." disabled class="form-control" /></div>
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">@@</span> <input type="submit" class="form-control btn  btn-primary" id="EditfileUpload" required /></div>
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="categoryModal" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Set Billin For <span id="categoryId" class="text-primary"></span></h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Name</span> <input type="text" placeholder="Category name..." id="categoryName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Amount</span> <input type="number" step="0.01" min="0" placeholder="eg 24.87" id="categoryAmount" class="form-control" required /></div>
+
+                                                    <div class="input-group m-b"><span class="input-group-addon"></span> <input type="submit" value="SaveChanges" class="form-control btn  btn-primary" id="categorySubmit" required /></div>
+                                                    <input type="hidden" id="EstateIdforCategory" class="form-control" required />
+
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p>create Billing Category for <span id="categoryIdd" class="text-primary"></span></p>
+                                                    <p class="text-center">
+                                                        <a href="#"><i class="fa fa-sign-in big-icon"></i></a>
+                                                    </p>
+                                                </div>
+
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="estateModal" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="text-center">
+                                        <h3 class="m-t-none m-b">Create Estate Admin For <span id="estateId" class="text-primary"></span></h3>
+
+                                        <p>Fill all forms correctly.</p>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form role="form" enctype="multipart/form-data">
+                                                <div class="col-sm-6 b-r">
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">First Name</span> <input type="text" placeholder="first name..." id="FirstName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Middle Name</span> <input type="text" placeholder="middle name..." id="MiddleName" class="form-control" required /></div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Address</span> <input type="text" placeholder="Address" id="Add" class="form-control" required /></div>
+
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">State</span> <select id="StateId" class="form-control select2-search__field" asp-items="@ViewBag.States" required>
+                                                            <option selected value="">Please Select</option>
+                                                        </select>
+                                                    </div>
+                                                    <input type="hidden" id="EstateIdforAdmin" class="form-control" required />
+
+                                                    <div class="input-group m-b"><span class="input-group-addon">Email</span> <input type="email" placeholder="Email" id="EmailId" class="form-control" required /></div>
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group m-b"><span class="input-group-addon">Last Name</span> <input type="text" placeholder="last name..." id="LastName" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">Gender</span><select class="form-control" id="Gender" required>
+                                                            <option selected value="">Please Select</option>
+                                                            <option value="Male" name="Male">Male</option>
+                                                            <option value="Female" name="Male">Female</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Phone</span> <input type="number" pattern="^\d{4}\d{3}\d{4}$" placeholder="Phone" id="Phone" class="form-control" required /></div>
+                                                    <div class="input-group m-b">
+                                                        <span class="input-group-addon">LGA</span>  <select asp-items='@(new SelectList(string.Empty, "LocalGovernmentName", "LocalGovernmentName"))' id="lgaId" class="form-control select2-search__field" required></select>
+                                                    </div>
+                                                    <div class="input-group m-b"><span class="input-group-addon">Password</span> <input type="password" placeholder="Password" id="Password" class="form-control" required /></div>
+                                                </div>
+
+                                                <div class="text-center">
+
+
+                                                    <input id="estateAdminSubmit" type="submit" value="Create" class="form-control btn  btn-primary" />
+                                                </div>
+
+
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row" id="hide">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>AVS Estate</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Name</th>
+                                <th>Adress</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total residents</th>
+                                <th>Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var estate in ViewBag.Estates)
+                            {
+
+                                <tr class="gradeX">
+                                    <td>
+                                        @(rowIndex++)
+                                    </td>
+                                    <td>@estate.EstateName</td>
+                                    <td>
+                                        @estate.Address
+                                    </td>
+                                    <td>@estate.Email</td>
+                                    <td class="center">@estate.PhoneNo</td>
+                                    <td class="center">@estate.NoOfCustomers</td>
+                                    <td class="center">@estate.EstateCode</td>
+                                    <td class="center">
+                                        <form asp-action="DeleteEstate" asp-controller="Estate" asp-route-id="@estate.EstateId" method="post">
+                                            <a onclick="editProduct(@estate.EstateId)" title="Edit"><i onclick="editProduct(@estate.EstateId)" class="fa fa-pencil"></i></a> |
+                                            <button type="submit" onclick="return confirm('are you sure you want to delete the estate : @estate.EstateName')" title="delete"><i class="fa fa-trash-o"></i></button> |
+                                            <a onclick="billinCategory(@estate.EstateId)" title="Create Billing Category For this Estate"><i onclick="billinCategory(@estate.EstateId)" class="fa fa-btc"></i></a>|
+                                            <a onclick="EstateAdmin(@estate.EstateId)" title="Create Estate Admin"><i onclick="EstateAdmin(@estate.EstateId)" class="fa fa-user-circle"></i></a>
+                                        </form>
+                                    </td>
+
+                                    @*<td class="center" title="Delete"><a onclick="deleteProduct(@estate.EstateId)"><i onclick="editProduct(@estate.EstateId)" class="fa fa-trash-o"></i></a></td>*@
+                                </tr>
+                            }
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>SN</th>
+                                <th>Name</th>
+                                <th>Adress</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total residents</th>
+                                <th>Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+    $(function () {
+        $('#StatesId').change(function () {
+            var url = '@Url.Content("~/")' + "Estate/getLgabyStatesId";
+            var ddlsource = "#StatesId";
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var items = "";
+                $('#LocalGovernmentId').empty();
+                $.each(data, function (i, row) {
+                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                });
+                $('#LocalGovernmentId').html(items);
+            });
+        });
+    });
+
+
+    </script>
+    <script>
+    $(function () {
+        $('#StatId').change(function () {
+            var url = '@Url.Content("~/")' + "Estate/getLgabyStatesId";
+            var ddlsource = "#StatId";
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var items = "";
+                $('#LocalId').empty();
+                $.each(data, function (i, row) {
+                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                });
+                $('#LocalId').html(items);
+            });
+        });
+    });
+
+
+    </script>
+    <script>
+    $(function () {
+        $('#StateId').change(function () {
+            var url = '@Url.Content("~/")' + "Estate/getLgabyStatesId";
+            var ddlsource = "#StateId";
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var items = "";
+                $('#lgaId').empty();
+                $.each(data, function (i, row) {
+                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                });
+                $('#lgaId').html(items);
+            });
+        });
+    });
+
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+
+    <script>
+
+        function edKeyPress() {
+        $('#chckEmail').hide();
+        var edValue = document.getElementById("email");
+        var url = '@Url.Content("~/")' + "Estate/ExistingEmail";
+        var ddlsource = edValue;
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var isExistEmail = data;
+                if (isExistEmail === true) {
+                   $('#fileUpload').attr("disabled", true);
+                    $('#chckEmail').show();
+                     var lblValue = document.getElementById("chckEmail");
+    chckEmail.innerText = "Email Exists"
+                }
+                else {
+                    $('#fileUpload').attr("disabled", false);
+                    $('#chckEmail').hide();
+                    $('#fileUpload').removeAttr("disabled");
+                }
+            });
+
+    }
+
+        function edValueKeyPress() {
+          $('#chckNumber').hide();
+        var edValue = document.getElementById("number");
+        var url = '@Url.Content("~/")' + "Estate/ExistingNumber";
+        var ddlsource = edValue;
+            $.getJSON(url, { Id: $(ddlsource).val() }, function (data) {
+                var isExistNumber = data;
+                if (isExistNumber === true) {
+                    $('#fileUpload').attr("disabled", true);
+                    $('#chckNumber').show();
+                     var lblValue = document.getElementById("chckNumber");
+    chckNumber.innerText = "Phone Number Exists"
+                }
+                else {
+                    $('#fileUpload').attr("disabled", false);
+                    $('#chckNumber').hide();
+                    $('#fileUpload').removeAttr("disabled");
+                }
+            });
+
+    }
+
+    </script>
+
+    <script>
+
+
+        $('#EditfileUpload').click(function (e) {
+            const isValidEmail = Email.checkValidity();
+            const isValidPhone = PhoneNo.checkValidity();
+
+            if ($('#Name').val() === "" || $('#Address').val() === "" || $('#PhoneNo').val() === "" || $('#LogoUrl').val() === "" || $('#Email').val() === "" || !isValidEmail || !isValidPhone) {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('please check for adjustments', 'Form is not valid');
+
+                }, 1300);
+                return false;
+            }
+            if (!isValidEmail) {
+
+            }
+            else {
+                EditEstate();
+            }
+
+        });
+
+        function EditMeter() {
+            var Estate = new Object();
+            Estate.EstateId = $('#EstateId').val();
+            Estate.EstateName = $('#Name').val();
+            Estate.Address = $('#Address').val();
+            Estate.LogoUrl = $('#LogoUrl').val();
+            Estate.Email = $('#PhoneNo').val();
+
+
+            $.ajax({
+                url: "/Estate/EditEstate",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(Estate),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+
+
+                    SuccessAlert();
+
+                    window.location.href = "/Estate/Estate"
+                    //$.ajax({
+                    //    url: "/Estate/Estate",
+                    //    type: "GET",
+                    //    dataType: "json",
+                    //    async: true,
+                    //    contentType: "application/json; charset =utf-8",
+                    //});
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        function SuccessAlert() {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 10000
+                };
+                toastr.success('congratulation', 'Updated successfully');
+
+            }, 1300);
+        }
+    </script>
+    <script>
+
+
+        $('#categorySubmit').click(function (e) {
+            const isValidAmount = categoryAmount.checkValidity();
+
+
+            if ($('#categoryName').val() === "" || $('#categoryAmount').val() === "" || !isValidAmount) {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('Form should not be empty', 'Form is not valid');
+
+                }, 1300);
+                return false;
+            }
+
+            else {
+                CreateEstateCategory();
+            }
+
+        });
+
+        function CreateEstateCategory() {
+            var BillingCategory = new Object();
+            BillingCategory.EstateId = $('#EstateIdforCategory').val();
+            BillingCategory.BillingCategoryName = $('#categoryName').val();
+            BillingCategory.BillingAmount = $('#categoryAmount').val();
+
+
+
+            $.ajax({
+                url: "/Estate/CreateBillingCategory",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(BillingCategory),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+
+
+                    setTimeout(function () {
+                        toastr.options = {
+                            closeButton: true,
+                            progressBar: true,
+                            showMethod: 'slideDown',
+                            timeOut: 10000
+                        };
+                        toastr.success('congratulation', 'data was successfully');
+
+                    }, 1300);
+                    alert("Category was added successfully.");
+                    window.location.href = "/Estate/Estate"
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+    </script>
+
+
+
+    <script>
+
+        function editProduct(id) {
+            $('#myModal').modal({ show: false })
+            //Window.location.href = "/Estate/EditEstate/" + id
+            $.ajax({
+                url: '/Estate/EditEstate/' + id, // The method name + paramater
+                success: function (data) {
+                    document.getElementById("EstateId").value = data.estateId;
+                    document.getElementById("Name").value = data.estateName;
+                    document.getElementById("Address").value = data.address;
+                    document.getElementById("PhoneNo").value = data.phoneNo;
+                    document.getElementById("Email").value = data.email;
+
+
+                    $('#myModal').modal('show');
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+        function billinCategory(id) {
+            $('#categoryModal').modal({ show: false })
+            //Window.location.href = "/Estate/EditEstate/" + id
+            $.ajax({
+                url: '/Estate/EstateBillingCategory/' + id, // The method name + paramater
+                success: function (data) {
+                    document.getElementById("EstateIdforCategory").value = data.estateId;
+                    document.getElementById("categoryId").innerText = data.estateName;
+                    document.getElementById("categoryIdd").innerText = data.estateName;
+                    document.getElementById("categoryName").value = ""
+                    document.getElementById("categoryAmount").value = ""
+                    categoryId.innerText = data.estateName;
+                    categoryIdd.innerText = data.estateName;
+
+
+                    $('#categoryModal').modal('show');
+                }
+            });
+        }
+    </script>
+    <script>
+
+        function EstateAdmin(id) {
+            $('#estateModal').modal({ show: false })
+            //Window.location.href = "/Estate/EditEstate/" + id
+            $.ajax({
+                url: '/Category/EstateBillingCategory/' + id, // The method name + paramater
+                success: function (data) {
+                    document.getElementById("EstateIdforAdmin").value = data.estateId;
+
+
+                    estateId.innerText = data.estateName;
+
+
+
+                    $('#estateModal').modal('show');
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+
+
+
+        $('#fileUpload').click(function (e) {
+            const isValidEmail = email.checkValidity();
+            const isValidPhone = number.checkValidity();
+
+            if ($('#name').val() === "" || $('#address').val() === "" || $('#number').val() === "" || $('#upload').val() === "" || $('#email').val() === "" || !isValidEmail || !isValidPhone || $('#StatesId').val() === "") {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('please check for adjustments', 'Form is not valid');
+
+                }, 1300);
+
+                return false;
+            }
+
+            else {
+
+                AddEstate();
+            }
+
+        });
+
+        function AddEstate() {
+            var Estate = new Object();
+            Estate.EstateName = $('#name').val();
+            Estate.Address = $('#address').val();
+            Estate.LogoUrl = $('#upload').val();
+            Estate.Email = $('#email').val();
+            Estate.PhoneNo = $('#number').val();
+            Estate.State = $('#StatesId').val();
+            Estate.LGA = $('#LocalGovernmentId').val();
+
+
+            $.ajax({
+                url: "/Estate/Create",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(Estate),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+
+
+                    setTimeout(function () {
+                        toastr.options = {
+                            closeButton: true,
+                            progressBar: true,
+                            showMethod: 'slideDown',
+                            timeOut: 10000
+                        };
+                        toastr.success('congratulation', 'Saved successfully');
+
+                    }, 1300);
+                    alert("Estate was added successfully...");
+                    setTimeout(function () {
+                        toastr.options = {
+                            closeButton: true,
+                            progressBar: true,
+                            showMethod: 'slideDown',
+                            timeOut: 10000
+                        };
+                        toastr.success('congratulation', 'Saved successfully');
+
+                    }, 1300);
+                    window.location.href = "/Estate/Estate"
+                    //$.ajax({
+                    //    url: "/Estate/Estate",
+                    //    type: "GET",
+                    //    dataType: "json",
+                    //    async: true,
+                    //    contentType: "application/json; charset =utf-8",
+                    //});
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+    </script>
+
+
+    <script>
+
+        function deleteProduct(id) {
+            $.ajax({
+                url: '/Estate/Delete/' + id, // The method name + paramater
+                success: function (data) {
+                    document.getElementById("edit").click();
+                }
+            });
+        }
+    </script>
+
+    @if (ViewBag.deleted == "Yes")
+    {
+        <script>
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 10000
+                };
+                toastr.success('Success', 'Estate has been deleted ');
+
+            }, 1300);
+        </script>
+    }
+
+
+
+
+    <script>
+
+
+        $('#estateAdminSubmit').click(function (e) {
+            const isValidEmail = EmailId.checkValidity();
+            const isValidPhone = Phone.checkValidity();
+
+            if ($('#FirstName').val() === "" || $('#MiddleName').val() === "" || $('#Add').val() === "" || $('#StateId').val() === "" || $('#EmailId').val() === "" || !isValidEmail || !isValidPhone || $('#LastName').val() === "" || $('#Gender').val() === "" || $('#Phone').val() === "" || $('#Password').val() === "") {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 10000
+                    };
+                    toastr.warning('tips:empty form, invalid email and Phone format', 'Form is not valid');
+
+                }, 1300);
+
+                return false;
+            }
+
+            else {
+
+                AddEstateAdmin();
+            }
+
+        });
+
+
+        function AddEstateAdmin() {
+            var EstateAdmin = new Object();
+
+            EstateAdmin.EstateId = $('#EstateIdforAdmin').val();
+            EstateAdmin.FirstName = $('#FirstName').val();
+            EstateAdmin.LastName = $('#LastName').val();
+            EstateAdmin.MiddleName = $('#MiddleName').val();
+            EstateAdmin.Address = $('#Add').val();
+            EstateAdmin.State = $('#StateId').val();
+            EstateAdmin.LGA = $('#lgaId').val();
+            EstateAdmin.Gender = $('#Gender').val();
+            EstateAdmin.PhoneNo = $('#Phone').val();
+            EstateAdmin.Email = $('#EmailId').val();
+            EstateAdmin.Password = $('#Password').val();
+
+
+
+            $.ajax({
+                url: "/Estate/CreateEstateAdmin",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(EstateAdmin),
+                async: false,
+                contentType: "application/json; charset =utf-8",
+
+                success: function (response) {
+                    if (response === true) {
+                        setTimeout(function () {
+                            toastr.options = {
+                                closeButton: true,
+                                progressBar: true,
+                                showMethod: 'slideDown',
+                                timeOut: 10000
+                            };
+                            toastr.success('congratulation', 'Saved successfully');
+
+                        }, 1300);
+                        alert("EstateAdmin was created successfully...");
+                        setTimeout(function () {
+                            toastr.options = {
+                                closeButton: true,
+                                progressBar: true,
+                                showMethod: 'slideDown',
+                                timeOut: 10000
+                            };
+                            toastr.success('congratulation', 'Saved successfully');
+
+                        }, 1300);
+                        window.location.href = "/Estate/Estate"
+                    }
+                    else {
+                        alert("failed to create the admin");
+                    }
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+    </script>
+
+}
+
+
